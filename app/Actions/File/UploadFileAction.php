@@ -2,16 +2,15 @@
 
 namespace App\Actions\File;
 
-use App\Models\File;
 use Exception;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\File;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
 class UploadFileAction
 {
-    function execute(Model $model, UploadedFile $file): File
+    public function execute(Model $model, UploadedFile $file): File
     {
         try {
             $filename = $file->getBasename();
@@ -20,6 +19,10 @@ class UploadFileAction
             $disk = Storage::disk('public');
 
             $path = $disk->putFile($file->getClientOriginalName(), $file);
+
+            if ($path === false) {
+                throw new Exception('Failed to upload file.');
+            }
 
             $size = $disk->size($path);
         } catch (Exception $th) {

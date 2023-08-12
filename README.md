@@ -11,3 +11,11 @@ Petshop is a technical interview task.
 - Fill database and mail credentials in `.env` file
 - Run `php artisan migrate --seed`, this will create your database tables and seed data.
 - Run `php artisan serve` to serve your project
+
+## Testing
+
+Test are written with [Pest](https://pestphp.com). Run the command below to run test.
+
+```bash
+php artisan test
+```

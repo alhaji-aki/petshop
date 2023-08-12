@@ -5,13 +5,9 @@ namespace Database\Factories;
 use App\Actions\File\UploadFileAction;
 use App\Models\Brand;
 use App\Models\Category;
-use App\Models\File;
 use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Http\File as HttpFile;
 use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\File as FacadesFile;
-use Illuminate\Support\Facades\Storage;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
@@ -31,7 +27,7 @@ class ProductFactory extends Factory
             'price' => fake()->randomFloat(2, 100, 1000),
             'description' => fake()->paragraph(),
             'brand_id' => Brand::factory(),
-            'metadata' => []
+            'metadata' => [],
         ];
     }
 

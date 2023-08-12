@@ -25,12 +25,12 @@ class UserFactory extends Factory
             'is_admin' => false,
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => null,
-            'password' =>  'password',
+            'password' => 'password',
             'address' => fake()->address(),
             'phone_number' => fake()->unique()->e164PhoneNumber(),
             'is_marketing' => false,
             'remember_token' => Str::random(10),
-            'last_login_at' => null
+            'last_login_at' => null,
         ];
     }
 

@@ -1,0 +1,64 @@
+name: Push WorkFlow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  phpstan:
+    name: Running PHPStan
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.1"
+
+      - uses: actions/checkout@v2
+
+      - name: Install
+        run: composer install
+
+      - name: Run analysis
+        run: ./vendor/bin/phpstan analyse
+
+  phpinsights:
+    name: Running PHPInsights
+    runs-on: ubuntu-latest
+    needs: [phpstan]
+
+    steps:
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.1"
+
+      - uses: actions/checkout@v2
+
+      - name: Install
+        run: composer install
+
+      - name: Run phpinsights
+        run: php artisan insights
+
+  pint:
+    name: Running Pint
+    runs-on: ubuntu-latest
+    needs: [phpinsights]
+
+    steps:
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: "8.1"
+
+      - uses: actions/checkout@v2
+
+      - name: Install
+        run: composer install
+
+      - name: Run pint
+        run: ./vendor/bin/pint
+
+      - uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_message: Apply pint changes

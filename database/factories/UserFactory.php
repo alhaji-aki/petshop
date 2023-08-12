@@ -2,7 +2,9 @@
 
 namespace Database\Factories;
 
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Str;
 
 /**
@@ -60,5 +62,18 @@ class UserFactory extends Factory
         return $this->state(fn (array $attributes) => [
             'is_marketing' => true,
         ]);
+    }
+
+    /**
+     * Save user avatar.
+     */
+    public function avatar(): static
+    {
+        return $this->afterCreating(function (User $user) {
+            app(UploadFileAction::class)->execute(
+                $user,
+                UploadedFile::fake()->image("{$user->uuid}.jpg", 500, 500)
+            );
+        });
     }
 }

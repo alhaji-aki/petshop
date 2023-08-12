@@ -2,9 +2,16 @@
 
 namespace Database\Factories;
 
+use App\Actions\File\UploadFileAction;
 use App\Models\Brand;
 use App\Models\Category;
+use App\Models\File;
+use App\Models\Product;
 use Illuminate\Database\Eloquent\Factories\Factory;
+use Illuminate\Http\File as HttpFile;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\File as FacadesFile;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Product>
@@ -26,5 +33,18 @@ class ProductFactory extends Factory
             'brand_id' => Brand::factory(),
             'metadata' => []
         ];
+    }
+
+    /**
+     * Save product image.
+     */
+    public function image(): static
+    {
+        return $this->afterCreating(function (Product $product) {
+            app(UploadFileAction::class)->execute(
+                $product,
+                UploadedFile::fake()->image("{$product->uuid}.jpg", 500, 500)
+            );
+        });
     }
 }

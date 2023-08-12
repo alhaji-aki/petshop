@@ -20,6 +20,7 @@ class ProductSeeder extends Seeder
         $brands = Brand::query()->get();
 
         Product::factory()
+            ->image()
             ->count(100)
             ->recycle($categories)
             ->recycle($brands)

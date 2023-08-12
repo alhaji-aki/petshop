@@ -39,7 +39,7 @@ jobs:
         run: composer install
 
       - name: Run phpinsights
-        run: php artisan insights
+        run: php artisan insights --no-interaction
 
   pint:
     name: Running Pint

@@ -14,11 +14,11 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: "8.2"
-
-      - uses: actions/checkout@v2
-
-      - name: Install
-        run: composer install
+      - uses: actions/checkout@v3
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
       - name: Run analysis
         run: ./vendor/bin/phpstan analyse
@@ -32,11 +32,11 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: "8.2"
-
-      - uses: actions/checkout@v2
-
-      - name: Install
-        run: composer install
+      - uses: actions/checkout@v3
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
 
       - name: Run phpinsights
         run: php artisan insights --no-interaction
@@ -50,15 +50,15 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: "8.2"
-
-      - uses: actions/checkout@v2
-
-      - name: Install
-        run: composer install
-
-      - name: Run pint
+      - uses: actions/checkout@v3
+      - name: Copy .env
+        run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+      - name: Install Dependencies
+        run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
+      - name: Run Pint
         run: ./vendor/bin/pint
 
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           commit_message: Apply pint changes
+          skip_fetch: true

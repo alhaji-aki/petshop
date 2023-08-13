@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-use NunoMaduro\PhpInsights\Domain\Metrics\Architecture\Classes;
-
 return [
 
     /*

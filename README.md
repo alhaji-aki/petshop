@@ -12,6 +12,15 @@ Petshop is a technical interview task.
 - Run `php artisan migrate --seed`, this will create your database tables and seed data.
 - Run `php artisan serve` to serve your project
 
+## Test Accounts
+
+When you run the `php artisan db:seed` command an admin and a user are seeded. You can find credentials below:
+
+- Admin: <admin@petshop.com>
+- User: <someone@somewhere.com>
+
+They both are seeded with password as `password`
+
 ## Testing
 
 Test are written with [Pest](https://pestphp.com). Run the command below to run test.

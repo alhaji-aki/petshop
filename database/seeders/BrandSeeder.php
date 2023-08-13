@@ -12,6 +12,9 @@ class BrandSeeder extends Seeder
      */
     public function run(): void
     {
+        if (Brand::query()->exists()) {
+            return;
+        }
         Brand::factory(10)->create();
     }
 }

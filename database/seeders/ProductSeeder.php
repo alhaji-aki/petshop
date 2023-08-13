@@ -14,6 +14,10 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
+        if (Product::query()->exists()) {
+            return;
+        }
+
         $categories = Category::query()->get();
 
         $brands = Brand::query()->get();

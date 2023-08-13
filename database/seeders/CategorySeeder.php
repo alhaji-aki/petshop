@@ -12,6 +12,10 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
+        if (Category::query()->exists()) {
+            return;
+        }
+
         Category::factory(10)->create();
     }
 }

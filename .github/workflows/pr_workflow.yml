@@ -57,6 +57,8 @@ jobs:
         run: composer install -q --no-ansi --no-interaction --no-scripts --no-progress --prefer-dist
       - name: Generate key
         run: php artisan key:generate
+      - name: Setup JWT authentication
+        run: php artisan jwt:install
       - name: Directory Permissions
         run: chmod -R 777 storage bootstrap/cache
       - name: Execute tests

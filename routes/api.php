@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Http\Controllers\v1\User;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::name('v1:')->prefix('v1')->group(function (): void {
+    /** User Routes */
+    Route::name('user:')->prefix('user')->group(function (): void {
+        // Authentication
+        Route::controller(User\LoginController::class)->group(function (): void {
+            Route::post('login', 'store')->name('login');
+        });
+    });
 });

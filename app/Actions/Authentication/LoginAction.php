@@ -43,13 +43,13 @@ class LoginAction
      */
     private function ensureIsNotRateLimited(Request $request): void
     {
-        if (!RateLimiter::tooManyAttempts($this->throttleKey($request, 'email'), 5)) {
+        if (!RateLimiter::tooManyAttempts($this->throttleKey($request), 5)) {
             return;
         }
 
         event(new Lockout($request));
 
-        $seconds = RateLimiter::availableIn($this->throttleKey($request, 'email'));
+        $seconds = RateLimiter::availableIn($this->throttleKey($request));
 
         $this->throwValidationError(trans('auth.throttle', [
             'seconds' => $seconds,
@@ -60,12 +60,12 @@ class LoginAction
     private function validatePassword(Request $request, User $user): void
     {
         if (!$user->exists || !Hash::check($request->string('password'), $user->getAuthPassword())) {
-            $this->increaseLoginAttempt($request, 'email');
+            $this->increaseLoginAttempt($request);
 
             $this->throwValidationError(trans('auth.failed'));
         }
 
-        $this->clearLoginAttempt($request, 'email');
+        $this->clearLoginAttempt($request);
     }
 
     /**
@@ -73,7 +73,7 @@ class LoginAction
      */
     private function increaseLoginAttempt(Request $request): void
     {
-        RateLimiter::hit($this->throttleKey($request, 'email'));
+        RateLimiter::hit($this->throttleKey($request));
     }
 
     private function throwValidationError(mixed $message, int $status = 422): void
@@ -88,7 +88,7 @@ class LoginAction
      */
     private function clearLoginAttempt(Request $request): void
     {
-        RateLimiter::clear($this->throttleKey($request, 'email'));
+        RateLimiter::clear($this->throttleKey($request));
     }
 
     /**

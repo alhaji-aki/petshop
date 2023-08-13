@@ -21,12 +21,18 @@ class JwtService
     {
         $configuration = $this->configuration();
 
+        /** @var int $expiration */
+        $expiration = config('jwt.expiration');
+
+        /** @var string $issuedBy */
+        $issuedBy = config('app.url');
+
         $issuedAt = now()->toImmutable();
-        $expiresAt = $issuedAt->addMinutes(config('jwt.expiration'));
+        $expiresAt = $issuedAt->addMinutes($expiration);
         $identifiedBy = Str::random(40);
 
         return $configuration->builder(ChainedFormatter::default())
-            ->issuedBy(config('app.url'))
+            ->issuedBy($issuedBy)
             ->identifiedBy($identifiedBy)
             ->issuedAt($issuedAt)
             ->expiresAt($expiresAt)
@@ -36,14 +42,18 @@ class JwtService
 
     public function validate(string $bearerToken): ?Plain
     {
+        /** @var string $issuedBy */
+        $issuedBy = config('app.url');
+
         $configuration = $this->configuration();
 
         $configuration->setValidationConstraints(
             new SignedWith($configuration->signer(), $configuration->signingKey()),
-            new IssuedBy(config('app.url')),
+            new IssuedBy($issuedBy),
         );
 
         try {
+            /** @var \Lcobucci\JWT\Token\Plain $token */
             $token = $configuration->parser()->parse($bearerToken);
         } catch (CannotDecodeContent | InvalidTokenStructure | UnsupportedHeaderFound $th) {
             return null;
@@ -60,10 +70,13 @@ class JwtService
 
     private function configuration(): Configuration
     {
+        /** @var string $secret */
+        $secret = config('jwt.secret');
+
         return Configuration::forAsymmetricSigner(
             new Sha256(),
             InMemory::file(storage_path('app/private.key')),
-            InMemory::base64Encoded(config('jwt.secret')),
+            InMemory::base64Encoded($secret),
         );
     }
 }

@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\Services\Jwt\JwtGuard;
 use Illuminate\Auth\RequestGuard;
+use Illuminate\Contracts\Auth\Factory;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 
@@ -23,6 +24,9 @@ class JwtServiceProvider extends ServiceProvider
         });
     }
 
+    /**
+     * @param \Illuminate\Contracts\Auth\Factory $auth
+     */
     private function createGuard($auth, array $config): RequestGuard
     {
         return new RequestGuard(

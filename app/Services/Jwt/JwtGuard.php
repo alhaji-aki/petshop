@@ -40,7 +40,7 @@ class JwtGuard
         }
 
         // if the uid does not match the token user's uuid return null
-        if ($jwtToken->user->uuid !== $userUuid) {
+        if ($jwtToken->user?->uuid !== $userUuid) {
             return null;
         }
 

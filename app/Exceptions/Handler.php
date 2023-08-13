@@ -3,6 +3,8 @@
 namespace App\Exceptions;
 
 use Illuminate\Support\Str;
+use App\Services\Response\ApiResponse;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -36,12 +38,14 @@ class Handler extends ExceptionHandler
                     ->trim()
                     ->toString();
 
-                return response()->json(['message' => "{$modelName} not found."], 404);
+                return ApiResponse::failedResponse("{$modelName} not found.", 404);
             }
 
-            return response()->json([
-                'message' => 'Resource is not available.',
-            ], 404);
+            return ApiResponse::failedResponse("Page not found.", 404);
+        });
+
+        $this->renderable(function (AuthenticationException $exception) {
+            return ApiResponse::failedResponse($exception->getMessage(), 401);
         });
     }
 }

@@ -75,7 +75,7 @@ class JwtService
 
         return Configuration::forAsymmetricSigner(
             new Sha256(),
-            InMemory::file(storage_path('app/private.key')),
+            InMemory::file(storage_path('app/jwt-private.key')),
             InMemory::base64Encoded($secret),
         );
     }

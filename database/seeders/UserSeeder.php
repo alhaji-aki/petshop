@@ -3,7 +3,6 @@
 namespace Database\Seeders;
 
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
 class UserSeeder extends Seeder
@@ -17,11 +16,11 @@ class UserSeeder extends Seeder
             return;
         }
 
-        User::factory()->create([
+        User::factory()->avatar()->create([
             'email' => 'someone@somewhere.com',
         ]);
 
-        User::factory()->isAdmin()->create([
+        User::factory()->avatar()->isAdmin()->create([
             'email' => 'admin@petshop.com'
         ]);
     }

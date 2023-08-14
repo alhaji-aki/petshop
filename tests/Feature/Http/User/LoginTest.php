@@ -1,5 +1,7 @@
 <?php
 
+namespace Tests\Feature\Http\User;
+
 use App\Models\User;
 
 test('user can log in and receive a JWT token', function () {

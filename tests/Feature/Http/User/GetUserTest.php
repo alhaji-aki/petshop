@@ -1,6 +1,7 @@
 <?php
 
-use App\Http\Resources\UserResource;
+namespace Tests\Feature\Http\User;
+
 use App\Models\User;
 use Illuminate\Testing\Fluent\AssertableJson;
 

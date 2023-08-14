@@ -19,7 +19,7 @@ Route::name('v1:')->prefix('v1')->group(function (): void {
     Route::name('user:')->prefix('user')->group(function (): void {
         // Authentication
         Route::controller(User\LoginController::class)->group(function (): void {
-            Route::post('login', 'store')->name('login');
+            Route::post('login', 'store')->name('login')->middleware(['guest:api']);
         });
 
         // User route

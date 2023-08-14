@@ -26,7 +26,7 @@ class UserResource extends JsonResource
             "last_name" => $this->last_name,
             "email" => $this->email,
             "email_verified_at" => $this->email_verified_at,
-            "avatar" => new FileResource($this->avatar),
+            "avatar" => new FileResource($this->whenLoaded('avatar')),
             "address" => $this->address,
             "phone_number" => $this->phone_number,
             "is_marketing" => $this->is_marketing,

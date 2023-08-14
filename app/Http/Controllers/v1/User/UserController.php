@@ -19,6 +19,6 @@ class UserController extends Controller
         $user = $request->user();
         $user->load('avatar');
 
-        return ApiResponse::successResponse((new UserResource($user))->toArray($request));
+        return ApiResponse::successResponse(new UserResource($user));
     }
 }

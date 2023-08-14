@@ -3,6 +3,7 @@
 namespace App\Services\Response;
 
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class ApiResponse
 {
@@ -12,7 +13,7 @@ class ApiResponse
      * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
      * @param array<int|string, mixed> $extra
      */
-    public static function successResponse(array $data, array $extra = []): JsonResponse
+    public static function successResponse(JsonResource|array $data, array $extra = []): JsonResponse
     {
         return response()->json([
             'success' => 1,

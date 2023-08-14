@@ -21,5 +21,10 @@ Route::name('v1:')->prefix('v1')->group(function (): void {
         Route::controller(User\LoginController::class)->group(function (): void {
             Route::post('login', 'store')->name('login');
         });
+
+        // User route
+        Route::controller(User\UserController::class)->group(function (): void {
+            Route::get('', 'show')->name('show')->middleware(['auth:api', 'user.type:user']);
+        });
     });
 });

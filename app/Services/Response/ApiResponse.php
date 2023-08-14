@@ -7,8 +7,10 @@ use Illuminate\Http\JsonResponse;
 class ApiResponse
 {
     /**
-     * @param array<int|string, int|string|array> $data
-     * @param array<int|string, int|string|array> $extra
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
+     * @param array<int|string, mixed> $data
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
+     * @param array<int|string, mixed> $extra
      */
     public static function successResponse(array $data, array $extra = []): JsonResponse
     {

@@ -14,14 +14,12 @@ class UploadFileAction
 {
     public function execute(Model $model, UploadedFile $uploadedFile): File
     {
-        $disk = Storage::disk('public');
-
         $file = new File();
         $file->model()->associate($model);
         $file->name = Str::random(8);
-        $file->type = $file->getClientMimeType();
-        $file->path = $this->saveFile($file->name, $uploadedFile, $disk);
-        $file->size = $disk->size($file->path);
+        $file->type = $uploadedFile->getClientMimeType();
+        $file->path = $this->saveFile($file->name, $uploadedFile);
+        $file->size = Storage::disk('public')->size($file->path);
 
         if ($file->path === false) {
             throw new Exception('Failed to upload file.');
@@ -32,11 +30,11 @@ class UploadFileAction
         return $file;
     }
 
-    private function saveFile(string $name, UploadedFile $uploadedFile, FilesystemAdapter $storage): string|false
+    private function saveFile(string $name, UploadedFile $uploadedFile): string|false
     {
         $basepath = Str::uuid();
         $filename = "{$name}.{$uploadedFile->getClientOriginalExtension()}";
 
-        return $storage->putFileAs($basepath, $uploadedFile, $filename);
+        return Storage::disk('public')->putFileAs($basepath, $uploadedFile, $filename);
     }
 }

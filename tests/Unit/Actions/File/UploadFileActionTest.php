@@ -4,8 +4,8 @@ namespace Tests\Unit\Actions\File;
 
 use App\Actions\File\UploadFileAction;
 use App\Models\File;
+use App\Models\User;
 use Exception;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
@@ -19,18 +19,7 @@ uses(
 beforeEach(function () {
     Storage::fake('public');
 
-    $this->model = new class extends Model
-    {
-        public function getKey(): int
-        {
-            return 1;
-        }
-
-        public function getMorphClass(): string
-        {
-            return 'TestModel';
-        }
-    };
+    $this->model = User::factory()->create();
 });
 
 it('successfully uploads a file and creates a File model', function () {
@@ -53,13 +42,11 @@ it('successfully uploads a file and creates a File model', function () {
 
 it('throws an exception when file upload fails', function () {
     Storage::shouldReceive('disk->putFileAs')->andReturn(false);
+    Storage::shouldReceive('disk->size')->andReturn(10);
 
     $uploadedFile = UploadedFile::fake()->image('test-image.jpg');
 
     $action = new UploadFileAction();
 
-    $this->expectException(Exception::class);
-    $this->expectExceptionMessage('Failed to upload file.');
-
     $action->execute($this->model, $uploadedFile);
-});
+})->throws(Exception::class, 'Failed to upload file.');

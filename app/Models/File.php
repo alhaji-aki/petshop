@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -47,5 +49,13 @@ class File extends Model
     public function uniqueIds(): array
     {
         return ['uuid'];
+    }
+
+    /** @return Attribute<string, never> */
+    protected function url(): Attribute
+    {
+        return Attribute::get(function (): string {
+            return Storage::disk('public')->url($this->path);
+        });
     }
 }

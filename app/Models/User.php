@@ -64,6 +64,11 @@ class User extends Authenticatable
         return $this->hasMany(Payment::class);
     }
 
+    public function orders(): HasMany
+    {
+        return $this->hasMany(Order::class);
+    }
+
     /**
      * Get the columns that should receive a unique identifier.
      *

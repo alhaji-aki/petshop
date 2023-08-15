@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\v1\User;
+use App\Http\Controllers\v1\Order;
 use App\Http\Controllers\v1\Payment;
 use Illuminate\Support\Facades\Route;
 
@@ -30,6 +31,9 @@ Route::name('v1:')->prefix('v1')->group(function (): void {
 
         // User payments
         Route::get('payments', User\PaymentController::class)->name('payments:index')->middleware(['auth:api']);
+
+        // User orders
+        Route::get('orders', User\OrderController::class)->name('orders:index')->middleware(['auth:api']);
     });
 
     // Payments management
@@ -39,5 +43,12 @@ Route::name('v1:')->prefix('v1')->group(function (): void {
             Route::post('', 'store')->middleware(['auth:api'])->name('store');
             Route::get('/{payment:uuid}', 'show')->middleware(['auth:api'])->name('show');
             Route::delete('/{payment:uuid}', 'destroy')->middleware(['auth:api'])->name('delete');
+        });
+
+    // Order management
+    Route::name('orders:')->prefix('orders')
+        ->controller(Order\OrderController::class)->group(function (): void {
+            Route::post('', 'store')->middleware(['auth:api'])->name('store');
+            Route::get('/{order:uuid}', 'show')->middleware(['auth:api'])->name('show');
         });
 });

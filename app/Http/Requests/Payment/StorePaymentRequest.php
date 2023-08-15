@@ -3,8 +3,13 @@
 namespace App\Http\Requests\Payment;
 
 use App\Enums\PaymentTypeEnum;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Validation\Rules\Enum;
+use App\Services\Response\ApiResponse;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\ValidationException;
+use Illuminate\Http\Exceptions\HttpResponseException;
 
 class StorePaymentRequest extends FormRequest
 {
@@ -66,5 +71,19 @@ class StorePaymentRequest extends FormRequest
                 'required', 'date_format:m/y', 'after:now',
             ],
         ];
+    }
+
+    protected function failedValidation(Validator $validator): void
+    {
+        $execption = (new ValidationException($validator));
+        $errors = $execption->errors();
+
+        throw new HttpResponseException(
+            ApiResponse::failedResponse(
+                $execption->getMessage(),
+                JsonResponse::HTTP_UNPROCESSABLE_ENTITY,
+                $errors
+            )
+        );
     }
 }

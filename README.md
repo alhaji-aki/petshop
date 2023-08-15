@@ -2,6 +2,16 @@
 
 Petshop is a technical interview task.
 
+## Features Implemented
+
+- [x] User Login
+- [x] User type middleware to restrict access depending on user type
+- [x] Authenticated user can get their profile
+- [x] User can get their payments
+- [x] User can get their orders
+- [x] Payment CRUD this does not include updating payments
+- [x] Order CRUD: Implemented only creating and getting an order
+
 ## Project Setup
 
 - Clone project `git clone git@github.com:alhaji-aki/petshop.git`

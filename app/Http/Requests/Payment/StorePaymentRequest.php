@@ -24,6 +24,27 @@ class StorePaymentRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
+     * @OA\RequestBody(
+     *     request="StorePaymentRequest",
+     *     required=true,
+     *     @OA\MediaType(
+     *         mediaType="application/x-www-form-urlencoded",
+     *         @OA\Schema(
+     *              required={"type", "details"},
+     *              @OA\Property(
+     *                  description="Payment type",
+     *                  property="type",
+     *                  type="string",
+     *                  enum={"credit_card", "cash_on_delivery", "bank_transfer"},
+     *              ),
+     *              @OA\Property(
+     *                  description="Review documentation for the payment type JSON format",
+     *                  property="details",
+     *                  type="object",
+     *              ),
+     *         )
+     *     )
+     * )
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
     public function rules(): array

@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Auth;
 
+use OpenApi\Annotations as OA;
 use Illuminate\Http\JsonResponse;
 use App\Services\Response\ApiResponse;
 use Illuminate\Foundation\Http\FormRequest;
@@ -21,6 +22,29 @@ class LoginRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
+     *
+     * @OA\RequestBody(
+     *     request="LoginRequest",
+     *     required=true,
+     *     @OA\MediaType(
+     *         mediaType="application/x-www-form-urlencoded",
+     *         @OA\Schema(
+     *              required={"email", "password"},
+     *              @OA\Property(
+     *                  description="User email",
+     *                  property="email",
+     *                  type="string",
+     *                  format="email"
+     *              ),
+     *              @OA\Property(
+     *                  description="User password",
+     *                  property="password",
+     *                  type="string",
+     *                  format="password"
+     *              )
+     *         )
+     *     )
+     * )
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */

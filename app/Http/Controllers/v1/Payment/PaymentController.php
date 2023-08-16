@@ -19,7 +19,49 @@ class PaymentController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * List all payments
+     *
+     * @OA\Get(
+     *     path="/api/v1/payments",
+     *     tags={"Payments"},
+     *     operationId="listPayments",
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="limit",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="sortBy",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="desc",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="bool",
+     *             enum={"true", "false"},
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="OK"),
+     *     @OA\Response(response="400", description="Bad request"),
+     *     @OA\Response(response="401", description="Unauthorized"),
+     *     @OA\Response(response="500", description="Internal Server Error"),
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
+     * )
      */
     public function index(Request $request): JsonResponse|Responsable
     {
@@ -44,7 +86,22 @@ class PaymentController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Create a new payment
+     *
+     * @OA\Post(
+     *     path="/api/v1/payments",
+     *     tags={"Payments"},
+     *     operationId="createPayment",
+     *     @OA\Response(response="200", description="OK"),
+     *     @OA\Response(response="401", description="Unauthorized"),
+     *     @OA\Response(response="422", description="Unprocessable Entity"),
+     *     @OA\Response(response="429", description="Rate limit exceeded"),
+     *     @OA\Response(response="500", description="Internal Server Error"),
+     *     @OA\RequestBody(ref="#/components/requestBodies/StorePaymentRequest"),
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
+     * )
      */
     public function store(StorePaymentRequest $request): JsonResponse
     {
@@ -57,7 +114,28 @@ class PaymentController extends Controller
     }
 
     /**
-     * Display the specified resource.
+     * Fetch a payment
+     *
+     * @OA\Get(
+     *     path="/api/v1/payments/{uuid}",
+     *     tags={"Payments"},
+     *     operationId="getPayment",
+     *     @OA\Parameter(
+     *         name="uuid",
+     *         required=true,
+     *         in="path",
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="OK"),
+     *     @OA\Response(response="401", description="Unauthorized"),
+     *     @OA\Response(response="404", description="Page not found"),
+     *     @OA\Response(response="500", description="Internal Server Error"),
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
+     * )
      */
     public function show(Payment $payment): JsonResponse
     {
@@ -65,7 +143,28 @@ class PaymentController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Delete an existing payment
+     *
+     * @OA\Delete(
+     *     path="/api/v1/payments/{uuid}",
+     *     tags={"Payments"},
+     *     operationId="deletePayment",
+     *     @OA\Parameter(
+     *         name="uuid",
+     *         required=true,
+     *         in="path",
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="OK"),
+     *     @OA\Response(response="401", description="Unauthorized"),
+     *     @OA\Response(response="404", description="Page not found"),
+     *     @OA\Response(response="500", description="Internal Server Error"),
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
+     * )
      */
     public function destroy(Payment $payment): JsonResponse
     {

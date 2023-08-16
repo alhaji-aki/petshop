@@ -25,6 +25,56 @@ class StoreOrderRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
+     * @OA\RequestBody(
+     *     request="StoreOrderRequest",
+     *     required=true,
+     *     @OA\MediaType(
+     *         mediaType="application/x-www-form-urlencoded",
+     *         @OA\Schema(
+     *              required={"order_status_uuid", "payment_uuid", "products", "address"},
+     *              @OA\Property(
+     *                  description="Order status uuid",
+     *                  property="order_status_uuid",
+     *                  type="string",
+     *              ),
+     *              @OA\Property(
+     *                  description="Payment uuid",
+     *                  property="payment_uuid",
+     *                  type="string",
+     *              ),
+     *              @OA\Property(
+     *                  description="Array of objects with product uuid and quantity",
+     *                  property="products",
+     *                  type="array",
+     *                  @OA\Items(
+     *                     type="object",
+     *                     @OA\Property(
+     *                         property="uuid",
+     *                         type="string",
+     *                     ),
+     *                     @OA\Property(
+     *                         property="quantity",
+     *                         type="integer",
+     *                         example=0
+     *                     )
+     *                  )
+     *              ),
+     *              @OA\Property(
+     *                  description="Billing and Shipping address",
+     *                  property="address",
+     *                  type="object",
+     *                  @OA\Property(
+     *                     property="shipping",
+     *                     type="string",
+     *                 ),
+     *                 @OA\Property(
+     *                     property="billing",
+     *                     type="string",
+     *                 )
+     *              )
+     *         )
+     *     )
+     * )
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array|string>
      */
     public function rules(): array

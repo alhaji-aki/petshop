@@ -12,7 +12,49 @@ use Illuminate\Contracts\Support\Responsable;
 class PaymentController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * List all payments for a user
+     *
+     * @OA\Get(
+     *     path="/api/v1/user/payments",
+     *     tags={"User"},
+     *     operationId="userPayments",
+     *     @OA\Parameter(
+     *         name="page",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="limit",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="integer",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="sortBy",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="string",
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="desc",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="bool",
+     *             enum={"true", "false"},
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="OK"),
+     *     @OA\Response(response="400", description="Bad request"),
+     *     @OA\Response(response="401", description="Unauthorized"),
+     *     @OA\Response(response="500", description="Internal Server Error"),
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
+     * )
      */
     public function __invoke(Request $request): JsonResponse|Responsable
     {

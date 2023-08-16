@@ -1,40 +1,38 @@
 openapi: 3.0.0
 info:
-  title: 'Pet Shop API - Swagger Documentation'
-  description: 'This API has been created with the goal to test the coding skills of the candidates who are applying for a job position at [Buckhill](https://www.buckhill.co.uk/careers/work-with-us).'
+  title: "Pet Shop API - Swagger Documentation"
+  description: "This API has been created with the goal to test the coding skills of the candidates who are applying for a job position at [Buckhill](https://www.buckhill.co.uk/careers/work-with-us)."
   version: 1.0.0
 paths:
   /api/v1/orders:
     post:
       tags:
         - Orders
-      summary: 'Create a new order'
+      summary: "Create a new order"
       operationId: createOrder
       requestBody:
-        $ref: '#/components/requestBodies/StoreOrderRequest'
+        $ref: "#/components/requestBodies/StoreOrderRequest"
       responses:
         200:
           description: OK
         401:
           description: Unauthorized
         422:
-          description: 'Unprocessable Entity'
+          description: "Unprocessable Entity"
         429:
-          description: 'Rate limit exceeded'
+          description: "Rate limit exceeded"
         500:
-          description: 'Internal Server Error'
+          description: "Internal Server Error"
       security:
-        -
-          bearerAuth: []
-  '/api/v1/orders/{uuid}':
+        - bearerAuth: []
+  "/api/v1/orders/{uuid}":
     get:
       tags:
         - Orders
-      summary: 'Fetch a order'
+      summary: "Fetch a order"
       operationId: getOrder
       parameters:
-        -
-          name: uuid
+        - name: uuid
           in: path
           required: true
           schema:
@@ -45,84 +43,76 @@ paths:
         401:
           description: Unauthorized
         404:
-          description: 'Page not found'
+          description: "Page not found"
         500:
-          description: 'Internal Server Error'
+          description: "Internal Server Error"
       security:
-        -
-          bearerAuth: []
+        - bearerAuth: []
   /api/v1/payments:
     get:
       tags:
         - Payments
-      summary: 'List all payments'
+      summary: "List all payments"
       operationId: listPayments
       parameters:
-        -
-          name: page
+        - name: page
           in: query
           schema:
             type: integer
-        -
-          name: limit
+        - name: limit
           in: query
           schema:
             type: integer
-        -
-          name: sortBy
+        - name: sortBy
           in: query
           schema:
             type: string
-        -
-          name: desc
+        - name: desc
           in: query
           schema:
             type: bool
             enum:
-              - 'true'
-              - 'false'
+              - "true"
+              - "false"
       responses:
         200:
           description: OK
         400:
-          description: 'Bad request'
+          description: "Bad request"
         401:
           description: Unauthorized
         500:
-          description: 'Internal Server Error'
+          description: "Internal Server Error"
       security:
-        -
-          bearerAuth: []
+        - bearerAuth: []
     post:
       tags:
         - Payments
-      summary: 'Create a new payment'
+      summary: "Create a new payment"
       operationId: createPayment
       requestBody:
-        $ref: '#/components/requestBodies/StorePaymentRequest'
+        $ref: "#/components/requestBodies/StorePaymentRequest"
       responses:
         200:
           description: OK
         401:
           description: Unauthorized
         422:
-          description: 'Unprocessable Entity'
+          description: "Unprocessable Entity"
         429:
-          description: 'Rate limit exceeded'
+          description: "Rate limit exceeded"
         500:
-          description: 'Internal Server Error'
+          description: "Internal Server Error"
       security:
-        -
-          bearerAuth: []
-  '/api/v1/payments/{uuid}':
+        - bearerAuth: []
+  "/api/v1/payments/{uuid}":
     get:
       tags:
         - Payments
-      summary: 'Fetch a payment'
+      summary: "Fetch a payment"
       operationId: getPayment
       parameters:
-        -
-          name: uuid
+        - name: uuid
           in: path
           required: true
           schema:
@@ -133,20 +123,18 @@ paths:
         401:
           description: Unauthorized
         404:
-          description: 'Page not found'
+          description: "Page not found"
         500:
-          description: 'Internal Server Error'
+          description: "Internal Server Error"
       security:
-        -
-          bearerAuth: []
+        - bearerAuth: []
     delete:
       tags:
         - Payments
-      summary: 'Delete an existing payment'
+      summary: "Delete an existing payment"
       operationId: deletePayment
       parameters:
-        -
-          name: uuid
+        - name: uuid
           in: path
           required: true
           schema:
@@ -157,119 +145,108 @@ paths:
         401:
           description: Unauthorized
         404:
-          description: 'Page not found'
+          description: "Page not found"
         500:
-          description: 'Internal Server Error'
+          description: "Internal Server Error"
       security:
-        -
-          bearerAuth: []
+        - bearerAuth: []
   /api/v1/user/login:
     post:
       tags:
         - User
-      summary: 'View a user account'
+      summary: "View a user account"
       operationId: login
       requestBody:
-        $ref: '#/components/requestBodies/LoginRequest'
+        $ref: "#/components/requestBodies/LoginRequest"
       responses:
         200:
           description: OK
         422:
-          description: 'Unprocessable Entity'
+          description: "Unprocessable Entity"
         429:
-          description: 'Rate limit exceeded'
+          description: "Rate limit exceeded"
         500:
-          description: 'Internal Server Error'
+          description: "Internal Server Error"
       security: []
   /api/v1/user/orders:
     get:
       tags:
         - User
-      summary: 'List all orders for a user'
+      summary: "List all orders for a user"
       operationId: userOrders
       parameters:
-        -
-          name: page
+        - name: page
           in: query
           schema:
             type: integer
-        -
-          name: limit
+        - name: limit
           in: query
           schema:
             type: integer
-        -
-          name: sortBy
+        - name: sortBy
           in: query
           schema:
             type: string
-        -
-          name: desc
+        - name: desc
           in: query
           schema:
             type: bool
             enum:
-              - 'true'
-              - 'false'
+              - "true"
+              - "false"
       responses:
         200:
           description: OK
         400:
-          description: 'Bad request'
+          description: "Bad request"
         401:
           description: Unauthorized
         500:
-          description: 'Internal Server Error'
+          description: "Internal Server Error"
       security:
-        -
-          bearerAuth: []
+        - bearerAuth: []
   /api/v1/user/payments:
     get:
       tags:
         - User
-      summary: 'List all payments for a user'
+      summary: "List all payments for a user"
       operationId: userPayments
       parameters:
-        -
-          name: page
+        - name: page
           in: query
           schema:
             type: integer
-        -
-          name: limit
+        - name: limit
           in: query
           schema:
             type: integer
-        -
-          name: sortBy
+        - name: sortBy
           in: query
           schema:
             type: string
-        -
-          name: desc
+        - name: desc
           in: query
           schema:
             type: bool
             enum:
-              - 'true'
-              - 'false'
+              - "true"
+              - "false"
       responses:
         200:
           description: OK
         400:
-          description: 'Bad request'
+          description: "Bad request"
         401:
           description: Unauthorized
         500:
-          description: 'Internal Server Error'
+          description: "Internal Server Error"
       security:
-        -
-          bearerAuth: []
+        - bearerAuth: []
   /api/v1/user:
     get:
       tags:
         - User
-      summary: 'View a user account'
+      summary: "View a user account"
       operationId: getUser
       responses:
         200:
@@ -277,10 +254,39 @@ paths:
         401:
           description: Unauthorized
         500:
-          description: 'Internal Server Error'
+          description: "Internal Server Error"
       security:
-        -
-          bearerAuth: []
+        - bearerAuth: []
+  /api/v1/exchange-rate:
+    get:
+      tags:
+        - "Exchange Rate"
+      summary: "Get exchange rate"
+      operationId: getExchangeRate
+      parameters:
+        - name: amount
+          in: query
+          schema:
+            type: number
+            format: float
+            oneOf:
+              - type: integer
+              - type: number
+                format: float
+        - name: currency
+          in: query
+          schema:
+            type: string
+            default: EUR
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: "Bad request"
+        "422":
+          description: "Unprocessable Request"
+        "500":
+          description: "Internal Server Error"
 components:
   requestBodies:
     LoginRequest:
@@ -293,11 +299,11 @@ components:
               - password
             properties:
               email:
-                description: 'User email'
+                description: "User email"
                 type: string
                 format: email
               password:
-                description: 'User password'
+                description: "User password"
                 type: string
                 format: password
             type: object
@@ -313,13 +319,13 @@ components:
               - address
             properties:
               order_status_uuid:
-                description: 'Order status uuid'
+                description: "Order status uuid"
                 type: string
               payment_uuid:
-                description: 'Payment uuid'
+                description: "Payment uuid"
                 type: string
               products:
-                description: 'Array of objects with product uuid and quantity'
+                description: "Array of objects with product uuid and quantity"
                 type: array
                 items:
                   properties:
@@ -330,7 +336,7 @@ components:
                       example: 0
                   type: object
               address:
-                description: 'Billing and Shipping address'
+                description: "Billing and Shipping address"
                 properties:
                   shipping:
                     type: string
@@ -348,14 +354,14 @@ components:
               - details
             properties:
               type:
-                description: 'Payment type'
+                description: "Payment type"
                 type: string
                 enum:
                   - credit_card
                   - cash_on_delivery
                   - bank_transfer
               details:
-                description: 'Review documentation for the payment type JSON format'
+                description: "Review documentation for the payment type JSON format"
                 type: object
             type: object
   securitySchemes:
@@ -363,15 +369,13 @@ components:
       type: http
       scheme: bearer
 security:
-  -
-    bearerAuth: []
+  - bearerAuth: []
 tags:
-  -
-    name: User
-    description: 'User API endpoint'
-  -
-    name: Payments
-    description: 'Payments API endpoint'
-  -
-    name: Orders
-    description: 'Orders API endpoint'
+  - name: User
+    description: "User API endpoint"
+  - name: Payments
+    description: "Payments API endpoint"
+  - name: Orders
+    description: "Orders API endpoint"
+  - name: "Exchange Rate"
+    description: "Exchange Rates API endpoint"

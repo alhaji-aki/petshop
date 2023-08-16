@@ -46,6 +46,14 @@ class ExchangeRateServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__ . '/../config/exchange-rate.php' => config_path('exchange-rate.php'),
             ], 'exchange-rate-config');
+
+            $this->publishes([
+                __DIR__ . '/../docs/swagger.json' => storage_path('api-docs/exchange-rate.json'),
+            ], 'exchange-rate-docs');
+
+            $this->publishes([
+                __DIR__ . '/../docs/swagger.yaml' => storage_path('api-docs/exchange-rate.yaml'),
+            ], 'exchange-rate-docs');
         }
     }
 }

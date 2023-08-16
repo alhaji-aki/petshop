@@ -1,0 +1,40 @@
+openapi: 3.0.0
+paths:
+  exchange-rate:
+    get:
+      tags:
+        - 'Exchange Rate'
+      summary: 'Get exchange rate'
+      operationId: getExchangeRate
+      parameters:
+        -
+          name: amount
+          in: query
+          schema:
+            type: number
+            format: float
+            oneOf:
+              -
+                type: integer
+              -
+                type: number
+                format: float
+        -
+          name: currency
+          in: query
+          schema:
+            type: string
+            default: EUR
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: 'Bad request'
+        '422':
+          description: 'Unprocessable Request'
+        '500':
+          description: 'Internal Server Error'
+tags:
+  -
+    name: 'Exchange Rate'
+    description: 'Exchange Rates API endpoint'

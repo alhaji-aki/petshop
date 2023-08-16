@@ -3,17 +3,16 @@
 namespace AlhajiAki\ExchangeRate;
 
 use Illuminate\Http\Client\Factory;
+use Illuminate\Http\Client\RequestException;
 use AlhajiAki\ExchangeRate\Exceptions\FailedToGetExchangeRate;
 
 class ExchangeRateService
 {
     public const API_URL = 'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml';
 
-    private Factory $http;
-
-    public function __construct(Factory $http)
-    {
-        $this->http = $http;
+    public function __construct(
+        private Factory $http
+    ) {
     }
 
     public function getEndpoint(): string
@@ -23,7 +22,11 @@ class ExchangeRateService
 
     public function convert(float|int $amount, string $currency): float
     {
-        $response = $this->http->get($this->getEndpoint());
+        try {
+            $response = $this->http->get($this->getEndpoint())->throwUnlessStatus(200);
+        } catch (RequestException $th) {
+            throw FailedToGetExchangeRate::because('The service is currently unavailable.');
+        }
 
         if ($response->failed()) {
             throw FailedToGetExchangeRate::because('The service is currently unavailable.');
@@ -53,8 +56,8 @@ class ExchangeRateService
         /** @var array<string, array> $data */
         $data = collect($decodedData)->flatten(1)->first(); // @phpstan-ignore-line
 
-        /** @var array|null $rate */
         // @phpstan-ignore-next-line
+        /** @var array|null $rate */
         $rate = collect($data['Cube'])
             ->pluck('@attributes')
             ->firstWhere('currency', strtoupper($currency));

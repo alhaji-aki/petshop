@@ -4,11 +4,12 @@ Petshop is a technical interview task.
 
 ## Features Implemented
 
-- [x] User Login
 - [x] User type middleware to restrict access depending on user type
-- [x] Authenticated user can get their profile
-- [x] User can get their payments
-- [x] User can get their orders
+- [x] User Flow
+  - Login
+  - Get Account
+  - Get orders
+  - Get payments
 - [x] Payment CRUD
   - Getting list of payments
   - Creating Payments
@@ -17,6 +18,8 @@ Petshop is a technical interview task.
 - [x] Order CRUD
   - Creating order
   - Getting Single Order
+
+You can refer to the swagger documentation at `/api/swagger` after setting up the project on your machine.
 
 ## Project Setup
 

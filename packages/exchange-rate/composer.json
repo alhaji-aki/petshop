@@ -28,9 +28,10 @@
     "require": {
         "php": "^8.2",
         "guzzlehttp/guzzle": "^7.2",
-        "illuminate/http": "^10.0",
         "illuminate/collections": "^10.0",
-        "illuminate/support": "^10.0"
+        "illuminate/http": "^10.0",
+        "illuminate/support": "^10.0",
+        "zircote/swagger-php": "^4.7"
     },
     "require-dev": {
         "mockery/mockery": "^1.3",

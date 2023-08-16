@@ -47,9 +47,19 @@ return [
 
 ```
 
+The package also generates a swagger documentation file which you can copy and add to your projects swagger documentation. Run the command below to publish swagger documentation. It will be located in `storage/api-docs`.
+
+```bash
+php artisan vendor:publish --provider "AlhajiAki\ExchangeRate\ExchangeRateServiceProvider" --tag="exchange-rate-docs"
+```
+
+You have to copy this documentation into your projects swagger documentation.
+
+***Note if you will have to do this everytime you regenerate your project's swagger documentation***
+
 ## Routes
 
-This package exposes an endpoint. Checkout out its swagger documentation here `TODO: add swagger link here` for more details
+This package exposes a get endpoint for getting exchange rate amount.
 
 ## Testing
 

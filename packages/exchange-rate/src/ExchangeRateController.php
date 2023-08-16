@@ -7,8 +7,47 @@ use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use AlhajiAki\ExchangeRate\Exceptions\FailedToGetExchangeRate;
 
+/**
+ * @OA\Tag(
+ *     name="Exchange Rate",
+ *     description="Exchange Rates API endpoint"
+ * )
+ */
 class ExchangeRateController
 {
+    /**
+     * Get exchange rate
+     *
+     * @OA\Get(
+     *     path="exchange-rate",
+     *     tags={"Exchange Rate"},
+     *     operationId="getExchangeRate",
+     *     @OA\Parameter(
+     *         name="amount",
+     *         in="query",
+     *         @OA\Schema(
+     *            type="number",
+     *            format="float",
+     *            oneOf={
+     *               @OA\Schema(type="integer"),
+     *               @OA\Schema(type="number", format="float"),
+     *            }
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="currency",
+     *         in="query",
+     *         @OA\Schema(
+     *             type="string",
+     *             default="EUR"
+     *         )
+     *     ),
+     *     @OA\Response(response="200", description="OK"),
+     *     @OA\Response(response="400", description="Bad request"),
+     *     @OA\Response(response="422", description="Unprocessable Request"),
+     *     @OA\Response(response="500", description="Internal Server Error"),
+     * )
+     */
     public function __invoke(Request $request, ExchangeRateService $service): JsonResponse
     {
         $validator = validator($request->all(), [

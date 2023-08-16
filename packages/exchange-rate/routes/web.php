@@ -1,6 +1,6 @@
 <?php
 
-use AlhajiAki\ExchangeRate\ExchangeRateController;
 use Illuminate\Support\Facades\Route;
+use AlhajiAki\ExchangeRate\ExchangeRateController;
 
 Route::get('exchange-rate', ExchangeRateController::class)->name('exchange-rate:index');

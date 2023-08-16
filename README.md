@@ -9,8 +9,14 @@ Petshop is a technical interview task.
 - [x] Authenticated user can get their profile
 - [x] User can get their payments
 - [x] User can get their orders
-- [x] Payment CRUD this does not include updating payments
-- [x] Order CRUD: Implemented only creating and getting an order
+- [x] Payment CRUD
+  - Getting list of payments
+  - Creating Payments
+  - View single payment
+  - Delete Payment
+- [x] Order CRUD
+  - Creating order
+  - Getting Single Order
 
 ## Project Setup
 

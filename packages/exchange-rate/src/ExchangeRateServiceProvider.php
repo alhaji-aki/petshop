@@ -26,25 +26,21 @@ class ExchangeRateServiceProvider extends ServiceProvider
 
     /**
      * Register the Exchange Rate route.
-     *
-     * @return void
      */
-    protected function registerRoutes()
+    protected function registerRoutes(): void
     {
         Route::group([
             'prefix' => config('exchange-rate.prefix'),
             'middleware' => config('exchange-rate.middleware', 'web'),
-        ], function () {
+        ], function (): void {
             $this->loadRoutesFrom(__DIR__ . '/../routes/web.php');
         });
     }
 
     /**
      * Setup the resource publishing groups for Exchange Rate.
-     *
-     * @return void
      */
-    protected function offerPublishing()
+    protected function offerPublishing(): void
     {
         if ($this->app->runningInConsole()) {
             $this->publishes([

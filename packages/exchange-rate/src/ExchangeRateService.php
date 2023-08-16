@@ -2,12 +2,11 @@
 
 namespace AlhajiAki\ExchangeRate;
 
-use AlhajiAki\ExchangeRate\Exceptions\FailedToGetExchangeRate;
 use Illuminate\Http\Client\Factory;
+use AlhajiAki\ExchangeRate\Exceptions\FailedToGetExchangeRate;
 
 class ExchangeRateService
 {
-    /** @var string default base URL for Data Center's API */
     public const API_URL = 'https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml';
 
     private Factory $http;
@@ -32,7 +31,7 @@ class ExchangeRateService
 
         libxml_use_internal_errors(true);
 
-        /** @var \SimpleXMLElement|false */
+        /** @var \SimpleXMLElement|false $xml */
         $xml = simplexml_load_string($response->body());
 
         if ($xml === false) {
@@ -47,20 +46,20 @@ class ExchangeRateService
 
         $decodedData = json_decode($encodedXML, true);
 
-        if (! $decodedData) {
+        if (!$decodedData) {
             throw FailedToGetExchangeRate::because('Invalid response received.');
         }
 
-        /** @var array<string, array> */
+        /** @var array<string, array> $data */
         $data = collect($decodedData)->flatten(1)->first(); // @phpstan-ignore-line
 
-        /** @var array|null */
+        /** @var array|null $rate */
         // @phpstan-ignore-next-line
         $rate = collect($data['Cube'])
             ->pluck('@attributes')
             ->firstWhere('currency', strtoupper($currency));
 
-        if (! $rate) {
+        if (!$rate) {
             throw FailedToGetExchangeRate::because('Rate not found.');
         }
 

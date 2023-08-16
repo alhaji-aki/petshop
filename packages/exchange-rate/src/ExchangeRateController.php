@@ -2,10 +2,10 @@
 
 namespace AlhajiAki\ExchangeRate;
 
-use AlhajiAki\ExchangeRate\Exceptions\FailedToGetExchangeRate;
 use Exception;
-use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
+use AlhajiAki\ExchangeRate\Exceptions\FailedToGetExchangeRate;
 
 class ExchangeRateController
 {
@@ -17,38 +17,53 @@ class ExchangeRateController
         ]);
 
         if ($validator->fails()) {
-            return $this->error(422, 'Invalid data submitted', $validator->errors()->toArray());
+            return $this->errorResponse('Invalid data submitted', 422, $validator->errors()->toArray());
         }
 
         try {
-            $amount = $service->convert(
-                $request->float('amount'),
-                $request->filled('currency') ? $request->string('currency')->toString() : 'EUR',
+            return $this->successResponse(
+                $service->convert(
+                    $request->float('amount'),
+                    $request->filled('currency') ? $request->string('currency')->toString() : 'EUR',
+                )
             );
-
-            return response()->json([
-                'success' => 1,
-                'data' => ['amount' => $amount],
-                'error' => null,
-                'errors' => [],
-                'extra' => [],
-            ]);
         } catch (FailedToGetExchangeRate $e) {
-            return $this->error(400, $e->getMessage());
+            return $this->errorResponse($e->getMessage(), 400);
         } catch (Exception $e) {
-            return $this->error();
+            return $this->errorResponse('Internal Server error', 500);
         }
     }
 
-    // @phpstan-ignore-next-line
-    private function error(int $code = 500, string $error = 'Internal Server Error', array $errors = [], array $trace = []): JsonResponse
+    private function successResponse(float $amount): JsonResponse
     {
+        return response()->json([
+            'success' => 1,
+            'data' => ['amount' => $amount],
+            'error' => null,
+            'errors' => [],
+            'extra' => [],
+        ]);
+    }
+
+    /**
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
+     * @param array<int|string, mixed> $errors
+     * @phpcsSuppress SlevomatCodingStandard.TypeHints.DisallowMixedTypeHint
+     * @param array<int|string, mixed> $trace
+     */
+    // @phpstan-ignore-next-line
+    private function errorResponse(
+        string $error,
+        int $status,
+        array $errors = [],
+        array $trace = []
+    ): JsonResponse {
         return response()->json([
             'success' => 0,
             'data' => [],
             'error' => $error,
             'errors' => $errors,
             'trace' => $trace,
-        ], $code);
+        ], $status);
     }
 }
